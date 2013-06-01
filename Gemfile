@@ -19,3 +19,4 @@ end
 gem 'jquery-rails'
 gem 'pry'
 gem 'awesome_print'
+gem 'activeadmin'

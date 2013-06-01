@@ -34,12 +34,16 @@ a.css('a:not([href="Chamber"])').map(&:parent).each do |normal|
 	speeches = normal.css('[type="MemberSpeech"]')
 	raise speeches.to_xml if speeches.length > 1
 	if speech = speeches.first
+		timestr = speech.parent.css('.HPS-Time').text
 		speaker_nameid = speech['href'].strip
 		speaker = SessionTalker.find_by_nameid(speaker_nameid)
+		sess_time = sess.date.to_time
+		h, m = timestr.split(':')
 
 		Speech.create!(
 			:session_talker_id => speaker.id,
-	      	:speech => normal.text.gsub(/[^:]*:/, '').strip
+	      	:speech => normal.text.gsub(/[^:]*:/, '').strip,
+	      	:time => sess_time + h.to_i.hours + m.to_i.minutes
 		)
 	end
 end

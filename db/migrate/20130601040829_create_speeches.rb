@@ -3,8 +3,7 @@ class CreateSpeeches < ActiveRecord::Migration
     create_table :speeches do |t|
       t.integer :session_talker_id
       t.text :speech
-
-      t.timestamps
+	  t.timestamp :time
     end
   end
 end
