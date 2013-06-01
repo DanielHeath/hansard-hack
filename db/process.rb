@@ -14,6 +14,7 @@ class MyStylesheet < RSLT::Stylesheet
     ignore "page_no"
     ignore "business_start"
     ignore "debateinfo"
+    ignore "subdebateinfo"
 
   	fallthrough "hansard"
     render "session_header" do
@@ -66,21 +67,13 @@ class MyStylesheet < RSLT::Stylesheet
       within "#{script} debate" do
 
         fallthrough "continue"
-        ["speech", "interjection"].each do |speech_type|
+        containers = (1..10).map {|i| "subdebate_#{i}" } + ["speech", "interjection"]
+        containers.each do |speech_type|
           fallthrough speech_type
           render "#{speech_type} para, #{speech_type} quote, #{speech_type} list" do
             $st.speeches.create!(
               :speech => text, :time => $SPEECH_TIME
             )
-          end
-        end
-
-        (1..10).each do |i|
-          fallthrough "subdebate_#{i}"
-          within "subdebate_#{i}" do
-            ignore "subdebateinfo"
-            render "speech" do
-            end
           end
         end
 
