@@ -107,7 +107,9 @@ class MyStylesheet < RSLT::Stylesheet
   end
 end
 
-f = File.read("db/2013-03-21.xml")
+Dir.glob(Rails.root.join("../openaustralia-data/data.openaustralia.org/rewritexml/senate_debates/*.xml")).each do |fn|
+
+f = File.read fn
 x = Nokogiri::XML f
 
 x.css("*").each do |e|
@@ -117,3 +119,4 @@ x.css("*").each do |e|
 end
 
 puts MyStylesheet.transform x
+end
