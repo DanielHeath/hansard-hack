@@ -7,8 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Bundler.require
 
-file = File.read('db/2013-03-20.xml'); 1
-a = Nokogiri::XML(file); 1
+file = File.read('db/2013-03-20.xml')
+a = Nokogiri::XML(file)
 
 sess = Session.new
 sess.date = a.xpath("//session.header/date").text
@@ -19,16 +19,23 @@ sess.chamber = a.xpath("//session.header/chamber").text
 sess.save!
 
 a.css("talker").each do |talker|
-
-	speaker = SessionTalker.create!(
+	speaker = sess.session_talkers.find_or_create_by_name(talker.xpath('name').text)
+	speaker.update_attributes(
 		:session_id => sess.id,
 		:name => talker.xpath('name').text,
 		:nameid => talker.xpath('name.id').text,
 		:electorate => talker.xpath('electorate').text,
 		:party => talker.xpath('party').text,
 	)
-
+	speaker.save!
 end
+binding.pry
+
+c = a.xpath('//chamber.xscript/debate')
+d = c.xpath('*//text()').reject &:blank?
+
+text = a.xpath('//text()').reject(&:blank?)
+
 
 a.css('a:not([href="Chamber"])').map(&:parent).each do |normal|
 	speeches = normal.css('[type="MemberSpeech"]')
