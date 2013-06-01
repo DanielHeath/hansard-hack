@@ -40,7 +40,6 @@ class MyStylesheet < RSLT::Stylesheet
     end
     ignore "session_header *"
 
-
     render "talker" do
       if element.css('time_stamp').any?
         ts = element.css('time_stamp').text
@@ -67,10 +66,11 @@ class MyStylesheet < RSLT::Stylesheet
       within "#{script} debate" do
 
         fallthrough "continue"
-        containers = (1..10).map {|i| "subdebate_#{i}" } + ["speech", "interjection"]
+        containers = (1..10).map {|i| "subdebate_#{i}" }
+        containers += ["speech", "interjection"]
         containers.each do |speech_type|
           fallthrough speech_type
-          render "#{speech_type} para, #{speech_type} quote, #{speech_type} list" do
+          render "#{speech_type} para, #{speech_type} quote, #{speech_type} list, #{speech_type} answer" do
             $st.speeches.create!(
               :speech => text, :time => $SPEECH_TIME
             )
@@ -96,20 +96,20 @@ class MyStylesheet < RSLT::Stylesheet
 
     end
 
-    render("text()") { raise element.to_xml[0..100] unless element.blank? }
+    # Debug: # render("text()") { raise element.to_xml[0..100] unless element.blank? }
   end
 end
 
 Dir.glob(Rails.root.join("../openaustralia-data/data.openaustralia.org/rewritexml/senate_debates/*.xml")).each do |fn|
+  $fn = fn
+  f = File.read fn
+  x = Nokogiri::XML f
 
-f = File.read fn
-x = Nokogiri::XML f
-
-x.css("*").each do |e|
-  if e.name =~ /\./
-    e.name = e.name.gsub(/\./, "_")
+  x.css("*").each do |e|
+    if e.name =~ /\./
+      e.name = e.name.gsub(/\./, "_")
+    end
   end
-end
 
-puts MyStylesheet.transform x
+  puts MyStylesheet.transform x
 end
