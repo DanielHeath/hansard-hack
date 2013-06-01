@@ -64,5 +64,7 @@ module Hansearch
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    config.serve_static_assets = true
+
   end
 end
