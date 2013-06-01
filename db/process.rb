@@ -96,7 +96,7 @@ class MyStylesheet < RSLT::Stylesheet
 
     end
 
-    # Debug: # render("text()") { raise element.to_xml[0..100] unless element.blank? }
+    render("text()") { raise element.to_xml[0..100] unless element.blank? }
   end
 end
 
