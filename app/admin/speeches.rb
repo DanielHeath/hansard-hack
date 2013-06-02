@@ -4,6 +4,7 @@ ActiveAdmin.register Speech do
     column :nameid
     column :speech
     column :time
+    column :name
     config.sort_order = "time_desc"
   end
 end
