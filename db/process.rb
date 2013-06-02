@@ -60,7 +60,7 @@ class MyStylesheet < RSLT::Stylesheet
       $st = st
     end
 
-    ["fedchamb_xscript", "chamber_xscript"].each do |script|
+    ["fedchamb_xscript", "chamber_xscript", "answers_to_questions"].each do |script|
       fallthrough "#{script}"
       fallthrough "#{script} debate"
       within "#{script} debate" do
