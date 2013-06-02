@@ -7,4 +7,8 @@ class Session < ActiveRecord::Base
   	h, m = str.split(":")
   	date.to_time + h.to_i.hours + m.to_i.minutes
   end
+
+  def to_label
+  	"#{chamber} - #{date.strftime("%d/%m/%Y")}"
+  end
 end
