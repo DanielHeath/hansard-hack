@@ -60,21 +60,19 @@ class MyStylesheet < RSLT::Stylesheet
       $st = st
     end
 
-    ["fedchamb_xscript", "chamber_xscript", "answers_to_questions"].each do |script|
+    ["fedchamb_xscript", "chamber_xscript", "answers_to_questions", "maincomm_xscript"].each do |script|
       fallthrough "#{script}"
       fallthrough "#{script} debate"
       within "#{script} debate" do
 
         fallthrough "continue"
-        containers = (1..10).map {|i| "subdebate_#{i}" }
-        containers += ["speech", "interjection"]
-        containers.each do |speech_type|
-          fallthrough speech_type
-          render "#{speech_type} para, #{speech_type} quote, #{speech_type} list, #{speech_type} answer" do
-            $st.speeches.create!(
-              :speech => text, :time => $SPEECH_TIME
-            )
-          end
+        fallthrough "interjection"
+        fallthrough "speech"
+        containers = (1..10).map {|i| fallthrough "subdebate_#{i}" }
+        render "para, quote, list, answer" do
+          $st.speeches.create!(
+            :speech => text, :time => $SPEECH_TIME
+          )
         end
 
         fallthrough "division"
