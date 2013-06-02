@@ -1,5 +1,4 @@
 Hansearch::Application.routes.draw do
-  ActiveAdmin.routes(self)
-
   root :to => 'welcome#index'
+  ActiveAdmin.routes(self)
 end
