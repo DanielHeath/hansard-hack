@@ -6,5 +6,6 @@ ActiveAdmin.register SessionTalker do
     column :party
     column :ts
     column :parlinfo_avatar
+    column :parlinfo_link
   end
 end
