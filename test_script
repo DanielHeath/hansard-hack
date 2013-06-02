@@ -1,0 +1,5 @@
+Session.delete_all
+SessionTalker.delete_all
+Speech.delete_all
+
+begin; require './db/process'; rescue Exception => e; binding.pry; end
