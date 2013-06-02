@@ -19,11 +19,14 @@ class SessionTalker < ActiveRecord::Base
     c = `curl '#{parlinfo_url}'`
     d = Nokogiri::HTML(c)
     e = d.css(":contains('Parliamentary Service')").last
+    raise parlinfo_url unless e
     while e = e.previous_sibling
       if e.class && e['class'] =~ /sumLink/
         self.party = e.text
+        break
       end
     end
+
     if not party.blank?
       SessionTalker.where(:nameid => nameid).each do |st|
         st.party = party
