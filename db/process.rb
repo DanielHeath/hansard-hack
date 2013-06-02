@@ -70,7 +70,7 @@ class MyStylesheet < RSLT::Stylesheet
         fallthrough "interjection"
         fallthrough "speech"
         containers = (1..10).map {|i| fallthrough "subdebate_#{i}" }
-        render "para, quote, list, answer" do
+        render "para, quote, list, question, answer" do
           $st.speeches.create!(
             :speech => text, :time => $SPEECH_TIME
           )
