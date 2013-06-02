@@ -100,7 +100,7 @@ class MyStylesheet < RSLT::Stylesheet
   end
 end
 
-Dir.glob(Rails.root.join("../openaustralia-data/data.openaustralia.org/rewritexml/senate_debates/*.xml")).each do |fn|
+Dir.glob(Rails.root.join("../openaustralia-data/data.openaustralia.org/rewritexml/*/*.xml")).each do |fn|
   $fn = fn
   f = File.read fn
   x = Nokogiri::XML f
