@@ -1,4 +1,5 @@
 ActiveAdmin.register Speech do
+  actions :index, :show
   index do
     column :session_talker
     column :speech
