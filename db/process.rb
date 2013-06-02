@@ -15,6 +15,7 @@ class MyStylesheet < RSLT::Stylesheet
     ignore "business_start"
     ignore "debateinfo"
     ignore "subdebateinfo"
+    ignore "amendments"
 
   	fallthrough "hansard"
     render "session_header" do
