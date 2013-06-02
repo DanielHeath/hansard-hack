@@ -23,3 +23,4 @@ gem 'awesome_print'
 gem 'activeadmin'
 gem 'rslt'
 gem 'd3-rails'
+gem "twitter-bootstrap-rails"
